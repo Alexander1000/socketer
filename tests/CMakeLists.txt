@@ -16,11 +16,14 @@ set(SOCKETER_PARSER_SOURCES
 find_library(CPP_UNIT_TEST libcpp-unit-test.a)
 message(STATUS "Found cpp-unit-test: ${CPP_UNIT_TEST}")
 
-include_directories(/usr/local/include)
+include_directories(
+    /usr/local/include
+    ../include
+)
 
 add_executable(
     ${PROJECT_NAME} main.cpp
-    ${YAML_PARSER_SOURCES}
+    ${SOCKETER_PARSER_SOURCES}
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -7,3 +7,4 @@ CMakeFiles
 socketer.cbp
 cmake-build-debug
 install_manifest.txt
+tests/socketer-tests

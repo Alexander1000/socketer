@@ -6,3 +6,8 @@ install_manifests.txt
 libsocket.a
 Makefile
 socketer.cbp
+tests/CMakeFies
+tests/CMakeCache.txt
+tests/Makefile
+tests/cmake_install.cmake
+tests/socketer-tests
