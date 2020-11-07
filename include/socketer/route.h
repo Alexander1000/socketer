@@ -3,6 +3,7 @@
 
 #include <string>
 #include <socketer/handler.h>
+#include <socketer/request.h>
 
 namespace Socketer
 {
@@ -10,6 +11,7 @@ namespace Socketer
     {
     public:
         Route(std::string uri, ServeHttpHandler handler);
+        bool match(Request *r);
 
     private:
         std::string uri;

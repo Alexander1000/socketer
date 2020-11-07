@@ -128,8 +128,12 @@ namespace Socketer
 
     void Socketer::on_request(char *raw_message, int received_bytes, int socket)
     {
+        Request r(raw_message);
+
         for (auto it = this->routes.begin(); it != this->routes.end(); it++) {
-            // do checks
+            if (it->match(&r)) {
+                return;
+            }
         }
     }
 }
