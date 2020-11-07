@@ -13,7 +13,7 @@ namespace Socketer
     public:
         Socketer();
         void addHandler(std::string uri, ServeHttpHandler handler);
-        void dispatch();
+        int dispatch();
         void listen(std::string host, int port);
 
     private:
@@ -21,6 +21,7 @@ namespace Socketer
         int listen_port;
         std::list<Route> routes;
         ServeHttpHandler default_handler;
+        int server_backlog;
     };
 }
 
