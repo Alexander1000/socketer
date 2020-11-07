@@ -15,6 +15,7 @@ namespace Socketer
         void addHandler(std::string uri, ServeHttpHandler handler);
         int dispatch();
         void listen(std::string host, int port);
+        void setDefaultHandler(ServeHttpHandler handler);
 
     private:
         std::string listen_host;

@@ -125,7 +125,7 @@ namespace Socketer
 
     void Socketer::addHandler(std::string uri, ServeHttpHandler handler)
     {
-        this->routes.emplace_back(Route(uri, handler));
+        this->routes.emplace_back(Route(std::move(uri), std::move(handler)));
     }
 
     void Socketer::on_request(char *raw_message, int received_bytes, int socket)
@@ -140,5 +140,9 @@ namespace Socketer
         }
 
         this->default_handler(&r, socket);
+    }
+
+    void Socketer::setDefaultHandler(ServeHttpHandler handler) {
+        this->default_handler = std::move(handler);
     }
 }
