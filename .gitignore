@@ -4,3 +4,5 @@ CMakeCache.txt
 libsocketer.a
 Makefile
 CMakeFiles
+socketer.cbp
+cmake-build-debug

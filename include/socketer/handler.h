@@ -1,6 +1,8 @@
 #ifndef SOCKETER_HEADER_H
 #define SOCKETER_HEADER_H
 
-typedef void() ServeHttpCallback;
+#include <functional>
+
+typedef std::function<void(char*)> ServeHttpCallback;
 
 #endif
