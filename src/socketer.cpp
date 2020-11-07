@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <cstring>
 
 namespace Socketer
 {
@@ -29,7 +30,7 @@ namespace Socketer
     {
         int server_sock = socket(AF_INET, SOCK_STREAM, 0);
         if (server_sock == -1) {
-            std::cout << "Error socket(): " << strerror(errno) << std::endl;
+            std::cout << "Error socket(): " << ::strerror(errno) << std::endl;
             return 1;
         }
 
@@ -43,19 +44,19 @@ namespace Socketer
         sa.sin_addr.s_addr = inet_addr(host);
 
         if (setsockopt(server_sock, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) == -1) {
-            std::cout << "Error setsockopt(): " << strerror(errno) << std::endl;
+            std::cout << "Error setsockopt(): " << ::strerror(errno) << std::endl;
             return 1;
         }
 
         // Bind server socket to ip:port
         if (::bind(server_sock, (const sockaddr*)&sa, sizeof(sa)) == -1) {
-            std::cout << "Error bind(): " << strerror(errno) << " on: " << host << ":" << port << std::endl;
+            std::cout << "Error bind(): " << ::strerror(errno) << " on: " << host << ":" << port << std::endl;
             return 1;
         }
 
         // Make server to listen
         if (::listen(server_sock, this->server_backlog) == -1) {
-            std::cout << "Error listen(): " << strerror(errno) << std::endl;
+            std::cout << "Error listen(): " << ::strerror(errno) << std::endl;
             return 1;
         }
 

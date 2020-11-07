@@ -1,6 +1,7 @@
 #include <socketer.h>
 #include <string>
 #include <map>
+#include <memory.h>
 
 namespace Socketer
 {
