@@ -1,0 +1,8 @@
+cmake-build-debug
+CMakeFiles
+cmake_install.cmake
+CMakeCache.txt
+install_manifests.txt
+libsocket.a
+Makefile
+socketer.cbp
