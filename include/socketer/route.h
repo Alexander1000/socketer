@@ -12,6 +12,7 @@ namespace Socketer
     public:
         Route(std::string uri, ServeHttpHandler handler);
         bool match(Request *r);
+        ServeHttpHandler getHandler();
 
     private:
         std::string uri;

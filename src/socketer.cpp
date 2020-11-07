@@ -132,8 +132,11 @@ namespace Socketer
 
         for (auto it = this->routes.begin(); it != this->routes.end(); it++) {
             if (it->match(&r)) {
+                it->getHandler()(&r, socket);
                 return;
             }
         }
+
+        this->default_handler(&r, socket);
     }
 }

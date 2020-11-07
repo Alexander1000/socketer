@@ -16,4 +16,8 @@ namespace Socketer
 
         return false;
     }
+
+    ServeHttpHandler Route::getHandler() {
+        return this->handler;
+    }
 }
