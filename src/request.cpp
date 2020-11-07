@@ -83,7 +83,7 @@ namespace Socketer
             }
         } while(true);
 
-        // skip separator (\n\r\n\r)
+        // skip separator (\r\n\r\n)
         cur_pos += 4;
 
         this->raw_body = new char[requestLength - cur_pos];
