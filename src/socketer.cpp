@@ -22,7 +22,7 @@ namespace Socketer
         this->listen_port = port;
     }
 
-    void Socketer::addHandler(std::string uri, ServeHttpCallback callback)
+    void Socketer::addHandler(std::string uri, ServeHttpHandler handler)
     {
         // add handler there
     }

@@ -12,7 +12,7 @@ namespace Socketer
     {
     public:
         Socketer();
-        void addHandler(std::string uri, ServeHttpHandler callback);
+        void addHandler(std::string uri, ServeHttpHandler handler);
         void dispatch();
         void listen(std::string host, int port);
 
@@ -20,6 +20,7 @@ namespace Socketer
         std::string listen_host;
         int listen_port;
         std::list<Route> routes;
+        ServeHttpHandler default_handler;
     };
 }
 
