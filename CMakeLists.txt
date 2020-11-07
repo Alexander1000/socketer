@@ -6,6 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(SOCKETER_SOURCES
     src/socketer.cpp
     src/route.cpp
+    src/request.cpp
 )
 
 if(NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)

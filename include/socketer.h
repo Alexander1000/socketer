@@ -3,5 +3,6 @@
 
 #include <socketer/handler.h>
 #include <socketer/socketer.h>
+#include <socketer/request.h>
 
 #endif
