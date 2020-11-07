@@ -41,7 +41,8 @@ include_directories(/usr/local/include)
 # target_link_libraries(${PROJECT_NAME} ${IO_BUFFER})
 
 install (TARGETS ${PROJECT_NAME}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    PUBLIC_HEADER DESTINATION include
     COMPONENT library
 )
