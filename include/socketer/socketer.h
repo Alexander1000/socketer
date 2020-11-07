@@ -3,6 +3,8 @@
 
 #include <string>
 #include <socketer/handler.h>
+#include <socketer/route.h>
+#include <list>
 
 namespace Socketer
 {
@@ -10,13 +12,14 @@ namespace Socketer
     {
     public:
         Socketer();
-        void addHandler(std::string uri, ServeHttpCallback callback);
+        void addHandler(std::string uri, ServeHttpHandler callback);
         void dispatch();
         void listen(std::string host, int port);
 
     private:
         std::string listen_host;
         int listen_port;
+        std::list<Route> routes;
     };
 }
 
