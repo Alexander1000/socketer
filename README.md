@@ -1,5 +1,6 @@
 # socketer
 
+## Example usage:
 ```cpp
 #include <string.h>
 #include <unistd.h>
@@ -46,4 +47,11 @@ void on_default_request(Socketer::Request* request, int socket) {
     write(socket, "\n\r\n\r", sizeof(char) * 8);
 }
 
+```
+
+## How it build:
+```shell
+cmake .
+make
+make install
 ```
