@@ -22,6 +22,8 @@ namespace Socketer
         std::list<Route> routes;
         ServeHttpHandler default_handler;
         int server_backlog;
+
+        void on_request(char* raw_message, int received_bytes, int socket);
     };
 }
 

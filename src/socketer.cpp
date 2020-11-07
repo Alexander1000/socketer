@@ -103,7 +103,7 @@ namespace Socketer
                     strcat(requestMessage, buf);
                 }
 
-                // on_request(requestMessage, totalReceiveBytes, newsockfd);
+                this->on_request(requestMessage, totalReceiveBytes, newsockfd);
 
                 close(newsockfd);
                 break;
@@ -124,5 +124,12 @@ namespace Socketer
     void Socketer::addHandler(std::string uri, ServeHttpHandler handler)
     {
         this->routes.emplace_back(Route(uri, handler));
+    }
+
+    void Socketer::on_request(char *raw_message, int received_bytes, int socket)
+    {
+        for (auto it = this->routes.begin(); it != this->routes.end(); it++) {
+            // do checks
+        }
     }
 }

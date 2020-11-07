@@ -3,6 +3,6 @@
 
 #include <functional>
 
-typedef std::function<void(char*)> ServeHttpHandler;
+typedef std::function<void(char*, int)> ServeHttpHandler;
 
 #endif
