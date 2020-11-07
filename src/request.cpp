@@ -79,6 +79,9 @@ namespace Socketer
             }
         } while(true);
 
+        // skip separator (\n\r\n\r)
+        cur_pos += 4;
+
         this->raw_body = new char[requestLength - cur_pos];
         memset(this->raw_body, 0, sizeof(char) * (requestLength - cur_pos));
         memcpy(this->raw_body, raw_request + cur_pos, (requestLength - cur_pos));

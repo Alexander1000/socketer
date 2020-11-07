@@ -11,9 +11,9 @@ CppUnitTest::TestCase* testRequest_PostRequest_Positive()
                         "User-Agent: curl/7.64.1\n"
                         "Accept: */*\n"
                         "Content-Length: 6\n"
-                        "Content-Type: application/x-www-form-urlencoded\n"
-                        "\n"
-                        "test=1";
+                        "Content-Type: application/x-www-form-urlencoded"
+                        "\n\r\n\r"
+                        "test=1\0";
 
     Socketer::Request r(raw_request);
 
