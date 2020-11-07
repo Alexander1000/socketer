@@ -6,4 +6,9 @@
 
 typedef std::function<void(Socketer::Request*, int)> ServeHttpHandler;
 
+namespace Socketer
+{
+    void default_handler(Socketer::Request* request, int socket);
+}
+
 #endif

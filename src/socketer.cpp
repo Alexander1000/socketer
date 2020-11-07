@@ -21,6 +21,8 @@ namespace Socketer
         this->server_backlog = 256;
 
         this->routes = std::list<Route>();
+
+        this->default_handler = ::Socketer::default_handler;
     }
 
     int Socketer::dispatch()
