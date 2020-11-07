@@ -1,6 +1,7 @@
 #include <socketer.h>
 #include <string>
 #include <utility>
+#include <list>
 
 namespace Socketer
 {
@@ -9,6 +10,8 @@ namespace Socketer
         // set defaults
         this->listen_host = "127.0.0.1";
         this->listen_port = 8890;
+
+        this->routes = std::list<Route>();
     }
 
     void Socketer::dispatch()
@@ -24,6 +27,6 @@ namespace Socketer
 
     void Socketer::addHandler(std::string uri, ServeHttpHandler handler)
     {
-        // add handler there
+        this->routes.emplace_back(Route(uri, handler));
     }
 }
