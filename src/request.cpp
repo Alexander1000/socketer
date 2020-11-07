@@ -36,14 +36,16 @@ namespace Socketer
         memcpy(this->uri, raw_request + start, sizeof(char) * (i - start - 1));
 
         start = i;
-        while (raw_request[i++] != '\n') {}
-        this->protocol = new char[i - start];
-        memset(this->protocol, 0, sizeof(char) * (i - start));
-        memcpy(this->protocol, raw_request + start, sizeof(char) * (i - start - 1));
+        while (raw_request[i] != '\r' && raw_request[i+1] != '\n') {
+            i++;
+        }
+        this->protocol = new char[i - start + 1];
+        memset(this->protocol, 0, sizeof(char) * (i - start + 1));
+        memcpy(this->protocol, raw_request + start, sizeof(char) * (i - start));
 
         // parse headers
 
-        int cur_pos = i;
+        int cur_pos = i + 2;
         int requestLength = strlen(raw_request);
 
         do {
@@ -58,21 +60,23 @@ namespace Socketer
             j++; // skip space
 
             int start_pos_header_value = j;
-            while (raw_request[j++] != '\n') {}
+            while (raw_request[j] != '\r' && raw_request[j+1] != '\n') {
+                j++;
+            }
             char *header_value;
-            header_value = new char[j - start_pos_header_value];
-            memset(header_value, 0, sizeof(char) * (j - start_pos_header_value));
-            memcpy(header_value, raw_request + start_pos_header_value, sizeof(char) * (j - start_pos_header_value - 1));
+            header_value = new char[j - start_pos_header_value + 1];
+            memset(header_value, 0, sizeof(char) * (j - start_pos_header_value + 1));
+            memcpy(header_value, raw_request + start_pos_header_value, sizeof(char) * (j - start_pos_header_value));
 
             this->headers[std::string(header_name)] = std::string(header_value);
 
-            cur_pos = j - 1;
+            cur_pos = j;
 
-            if (raw_request[cur_pos] == '\n' && raw_request[cur_pos + 1] == '\r') {
+            if (raw_request[cur_pos] == '\r' && raw_request[cur_pos + 1] == '\n' && raw_request[cur_pos + 2] == '\r' && raw_request[cur_pos + 3] == '\n') {
                 break;
             }
 
-            cur_pos++;
+            cur_pos += 2;
 
             if (cur_pos >= requestLength) {
                 break;
