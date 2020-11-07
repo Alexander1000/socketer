@@ -21,6 +21,9 @@ RUN mkdir -p /tmp/cpp-utils \
 
 COPY . /app
 
-WORKDIR /app
+RUN cd /app && cmake . && make && make install \
+    && cd tests && cmake . && make
 
-RUN cmake . && make && make install
+WORKDIR /app/tests
+
+ENTRYPOINT ["./socketer-tests"]

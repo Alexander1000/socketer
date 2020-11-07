@@ -55,3 +55,9 @@ cmake .
 make
 make install
 ```
+
+## Build and run tests in docker
+```shell
+docker build -t socketer .
+docker run --rm -it socketer
+```
