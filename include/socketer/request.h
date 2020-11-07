@@ -15,6 +15,8 @@ namespace Socketer
         char* protocol;
         std::map<std::string, std::string> headers;
         char* raw_body;
+    private:
+        void parse_raw_request(char* raw_request);
     };
 }
 
