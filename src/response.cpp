@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <memory.h>
+#include <unistd.h>
 
 namespace Socketer
 {
@@ -19,7 +20,17 @@ namespace Socketer
 
     void Response::reply()
     {
-        // do reply
+        char* header_row = (char*) malloc(512 * sizeof(char));
+
+        for (auto it = this->headers.begin(); it != this->headers.end(); it++) {
+            memset(header_row, 0, 512 * sizeof(char));
+            sprintf(header_row, "%s: %s\r\n", it->first.c_str(), it->second.c_str());
+            write(header_row, strlen(header_row));
+        }
+        free(header_row);
+        write((void*) "\r\n", 2);
+
+        write(this->responseBody, this->currentWritePosition);
     }
 
     void Response::addHeader(std::string headerName, std::string headerValue)
