@@ -1,6 +1,7 @@
 #include <socketer.h>
 #include <string>
 #include <map>
+#include <list>
 #include <memory.h>
 #include <unistd.h>
 
@@ -10,6 +11,7 @@ namespace Socketer
     {
         this->socket = socket;
         this->currentWritePosition = 0;
+        this->rawHeads = std::list<std::string>();
         this->headers = std::map<std::string, std::string>();
 
         this->memoryFrame = 512;
@@ -20,6 +22,11 @@ namespace Socketer
 
     void Response::reply()
     {
+        for (auto it = this->rawHeads.begin(); it != this->rawHeads.end(); it++) {
+            write((void*) it->c_str(), it->length());
+            write((void*) "\r\n", 2);
+        }
+
         char* header_row = (char*) malloc(512 * sizeof(char));
 
         for (auto it = this->headers.begin(); it != this->headers.end(); it++) {
@@ -31,6 +38,11 @@ namespace Socketer
         write((void*) "\r\n", 2);
 
         write(this->responseBody, this->currentWritePosition);
+    }
+
+    void Response::writeHead(std::string rawHead)
+    {
+        this->rawHeads.emplace_back(std::move(rawHead));
     }
 
     void Response::addHeader(std::string headerName, std::string headerValue)

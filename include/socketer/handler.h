@@ -3,12 +3,13 @@
 
 #include <functional>
 #include <socketer/request.h>
+#include <socketer/response.h>
 
-typedef std::function<void(Socketer::Request*, int)> ServeHttpHandler;
+typedef std::function<void(Socketer::Request*, Socketer::Response*)> ServeHttpHandler;
 
 namespace Socketer
 {
-    void default_handler(Socketer::Request* request, int socket);
+    void default_handler(Socketer::Request* request, Socketer::Response* response);
 }
 
 #endif

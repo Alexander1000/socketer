@@ -10,6 +10,7 @@ set(SOCKETER_PARSER_SOURCES
     ../src/handler.cpp
     ../src/request.cpp
     ../src/route.cpp
+    ../src/response.cpp
     ../src/socketer.cpp
 )
 

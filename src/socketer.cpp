@@ -131,16 +131,17 @@ namespace Socketer
 
     void Socketer::on_request(char *raw_message, int received_bytes, int socket)
     {
-        Request r(raw_message);
+        Request req(raw_message);
+        Response resp(socket);
 
         for (auto it = this->routes.begin(); it != this->routes.end(); it++) {
-            if (it->match(&r)) {
-                it->getHandler()(&r, socket);
+            if (it->match(&req)) {
+                it->getHandler()(&req, &resp);
                 return;
             }
         }
 
-        this->default_handler(&r, socket);
+        this->default_handler(&req, &resp);
     }
 
     void Socketer::setDefaultHandler(ServeHttpHandler handler) {
