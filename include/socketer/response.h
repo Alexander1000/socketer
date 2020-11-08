@@ -16,7 +16,9 @@ namespace Socketer
     private:
         int socket;
         std::map<std::string, std::string> headers;
+        int memoryFrame;
         int currentWritePosition;
+        int currentBodySize;
         void* responseBody;
     };
 }
