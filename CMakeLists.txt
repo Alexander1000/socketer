@@ -8,6 +8,7 @@ set(SOCKETER_SOURCES
     src/route.cpp
     src/request.cpp
     src/handler.cpp
+    src/response.cpp
 )
 
 if(NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
