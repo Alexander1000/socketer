@@ -29,6 +29,10 @@ namespace Socketer
 
         char* header_row = (char*) malloc(512 * sizeof(char));
 
+        if (this->currentWritePosition > 0) {
+            this->addHeader("Content-Length", std::to_string(this->currentWritePosition));
+        }
+
         for (auto it = this->headers.begin(); it != this->headers.end(); it++) {
             memset(header_row, 0, 512 * sizeof(char));
             sprintf(header_row, "%s: %s\r\n", it->first.c_str(), it->second.c_str());
@@ -37,7 +41,9 @@ namespace Socketer
         free(header_row);
         ::write(this->socket, (void*) "\r\n", 2);
 
-        ::write(this->socket, this->responseBody, this->currentWritePosition);
+        if (this->currentWritePosition > 0) {
+            ::write(this->socket, this->responseBody, this->currentWritePosition);
+        }
     }
 
     void Response::writeHead(std::string rawHead)

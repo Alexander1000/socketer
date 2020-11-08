@@ -6,7 +6,10 @@ RUN apt-get update \
         unzip \
         g++ \
         make \
-        cmake
+        cmake \
+        pkg-config \
+        libcurl4 \
+        libcurl4-openssl-dev
 
 # install cpp-unit-test library
 RUN mkdir -p /tmp/cpp-utils \

@@ -1,5 +1,7 @@
 #include <cpp-unit-test.h>
 #include <socketer.h>
+#include <thread>
+#include <curl/curl.h>
 
 CppUnitTest::TestCase* testRequest_PostRequest_Positive()
 {
@@ -36,12 +38,66 @@ CppUnitTest::TestCase* testRequest_PostRequest_Positive()
     return t;
 }
 
+size_t WriteCallback(char *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
+CppUnitTest::TestCase* testDefaultServe_SimpleRequest_Positive()
+{
+    CppUnitTest::TestCase* t = new CppUnitTest::TestCase("002-default-serve-simple-request");
+    t->printTitle();
+
+    CURL* c;
+    c = curl_easy_init();
+
+    std::string readBuffer;
+    std::string headerBuffer;
+
+    curl_easy_setopt(c, CURLOPT_URL, "127.0.0.1:49900" );
+    curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(c, CURLOPT_WRITEDATA, &readBuffer);
+    curl_easy_setopt(c, CURLOPT_HEADERFUNCTION, WriteCallback);
+    curl_easy_setopt(c, CURLOPT_HEADERDATA, &headerBuffer);
+    curl_easy_perform(c);
+    curl_easy_cleanup(c);
+
+    CppUnitTest::assertEquals(
+        t,
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Length: 15\r\n"
+        "Server: socketer/1.0.0\r\n\r\n",
+        headerBuffer
+    );
+
+    CppUnitTest::assertEquals(
+        t,
+        "default handler",
+        readBuffer
+    );
+
+    t->finish();
+    return t;
+}
+
+void run_server() {
+    std::cout << "Run Server" << std::endl;
+    Socketer::Socketer s;
+    s.listen("127.0.0.1", 49900);
+    s.dispatch();
+}
 
 int main(int argc, char** argv)
 {
+    std::thread t(run_server);
+    t.detach();
+
     CppUnitTest::TestSuite testSuite;
 
     testSuite.addTestCase(testRequest_PostRequest_Positive());
+
+    testSuite.addTestCase(testDefaultServe_SimpleRequest_Positive());
 
     testSuite.printTotal();
 
