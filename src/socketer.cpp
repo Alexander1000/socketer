@@ -136,15 +136,21 @@ namespace Socketer
 
         for (auto it = this->routes.begin(); it != this->routes.end(); it++) {
             if (it->match(&req)) {
-                it->getHandler()(&req, &resp);
+                ServeHttpHandler handler = it->getHandler();
+                this->call_handler(&handler, &req, &resp);
                 return;
             }
         }
 
-        this->default_handler(&req, &resp);
+        this->call_handler(&this->default_handler, &req, &resp);
     }
 
     void Socketer::setDefaultHandler(ServeHttpHandler handler) {
         this->default_handler = std::move(handler);
+    }
+
+    void Socketer::call_handler(ServeHttpHandler* handler, Request *req, Response *resp)
+    {
+        (*handler)(req, resp);
     }
 }

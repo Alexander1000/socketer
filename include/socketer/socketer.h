@@ -4,6 +4,8 @@
 #include <string>
 #include <socketer/handler.h>
 #include <socketer/route.h>
+#include <socketer/request.h>
+#include <socketer/response.h>
 #include <list>
 
 namespace Socketer
@@ -25,6 +27,7 @@ namespace Socketer
         int server_backlog;
 
         void on_request(char* raw_message, int received_bytes, int socket);
+        static void call_handler(ServeHttpHandler* handler, Request* req, Response* resp);
     };
 }
 
