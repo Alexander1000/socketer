@@ -24,6 +24,8 @@ namespace Socketer
         this->routes = std::list<Route>();
 
         this->default_handler = ::Socketer::default_handler;
+
+        this->middlewares = std::list<ServeHttpHandler>();
     }
 
     int Socketer::dispatch()
@@ -151,6 +153,13 @@ namespace Socketer
 
     void Socketer::call_handler(ServeHttpHandler* handler, Request *req, Response *resp)
     {
+        for (auto it = this->middlewares.begin(); it != this->middlewares.end(); it++) {
+            (*it)(req, resp);
+        }
         (*handler)(req, resp);
+    }
+
+    void Socketer::addMiddleware(ServeHttpHandler handler) {
+        this->middlewares.emplace_back(std::move(handler));
     }
 }

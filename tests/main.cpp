@@ -85,6 +85,11 @@ void run_server() {
     std::cout << "Run Server" << std::endl;
     Socketer::Socketer s;
     s.listen("127.0.0.1", 49900);
+    s.addMiddleware(
+        [](Socketer::Request* req, Socketer::Response* resp) {
+            resp->addHeader("Server", "socketer/1.0.0");
+        }
+    );
     s.dispatch();
 }
 

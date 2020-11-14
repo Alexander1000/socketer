@@ -18,6 +18,7 @@ namespace Socketer
         int dispatch();
         void listen(std::string host, int port);
         void setDefaultHandler(ServeHttpHandler handler);
+        void addMiddleware(ServeHttpHandler handler);
 
     private:
         std::string listen_host;
@@ -25,9 +26,10 @@ namespace Socketer
         std::list<Route> routes;
         ServeHttpHandler default_handler;
         int server_backlog;
+        std::list<ServeHttpHandler> middlewares;
 
         void on_request(char* raw_message, int received_bytes, int socket);
-        static void call_handler(ServeHttpHandler* handler, Request* req, Response* resp);
+        void call_handler(ServeHttpHandler* handler, Request* req, Response* resp);
     };
 }
 
